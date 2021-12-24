@@ -1,12 +1,16 @@
 import express from "express";
 import * as fs from "fs/promises";
-import fetch from "node-fetch";
+import * as env from "dotenv";
 const app = express();
+
+env.config();
 
 let fidgets = [];
 
-app.listen(3000, async () => {
-  console.log("connecting at port 8000");
+const port = process.env.PORT || 3000;
+
+app.listen(port, async () => {
+  console.log(`connecting at port ${port}`);
   fidgets = await fs.readdir("./fidgets");
 });
 app.use(express.static("public"));
